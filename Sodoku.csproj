@@ -43,7 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Board.cs" />
+    <Compile Include="BoxNumberGenerator.cs" />
+    <Compile Include="SolvedCell.cs" />
+    <Compile Include="UnsolvedCell.cs" />
+    <Compile Include="GlobalConstants.cs" />
+    <Compile Include="ICell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

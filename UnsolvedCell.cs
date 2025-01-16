@@ -9,7 +9,7 @@ namespace Sodoku
 {
     internal class UnsolvedCell : ICell
     {
-        private SortedSet<int> _options { get; }
+        public SortedSet<int> _options { get; }
         public int _row { get; }
         public int _col { get; }
         public int _box { get; }
