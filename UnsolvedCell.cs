@@ -9,7 +9,7 @@ namespace Sodoku
 {
     internal class UnsolvedCell : ICell
     {
-        public SortedSet<int> _options { get; }
+        public HashSet<int> _options { get; }
         public int _row { get; }
         public int _col { get; }
         public int _box { get; }
@@ -19,7 +19,7 @@ namespace Sodoku
             _row = row;
             _col = col;
             _box = box;
-            _options = new SortedSet<int>();
+            _options = new HashSet<int>();
 
             InitializeCell();
         }
@@ -28,7 +28,7 @@ namespace Sodoku
             _row = row;
             _col = col;
             _box = box;
-            _options = new SortedSet<int>{preFilledCellValue};
+            _options = new HashSet<int>{preFilledCellValue};
         }
 
         public void InitializeCell()
