@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="BoxNumberGenerator.cs" />
+    <Compile Include="SodokuSolver.cs" />
     <Compile Include="SolvedCell.cs" />
     <Compile Include="UnsolvedCell.cs" />
     <Compile Include="GlobalConstants.cs" />

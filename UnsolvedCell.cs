@@ -31,6 +31,18 @@ namespace Sodoku
             _options = new HashSet<int>{preFilledCellValue};
         }
 
+        /// <summary>
+        /// for deep cloning
+        /// </summary>
+        /// <param name="cell"></param>
+        public UnsolvedCell(UnsolvedCell cell)
+        {
+            _row = cell._row;
+            _col = cell._col;
+            _box = cell._box;
+            _options = new HashSet<int> (cell._options);
+        }
+
         public void InitializeCell()
         {
             for (int i = 1; i < BoardLength+1; i++)

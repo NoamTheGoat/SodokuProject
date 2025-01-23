@@ -20,5 +20,12 @@ namespace Sodoku
             _box = box;
             _value = value;
         }
+        public SolvedCell(SolvedCell cell)
+        {
+            _row = cell._row;
+            _col = cell._col;
+            _box = cell._box;
+            _value = cell._value;
+        }
     }
 }
