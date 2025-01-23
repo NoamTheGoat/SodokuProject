@@ -43,17 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="BoxNumberGenerator.cs" />
+    <Compile Include="CustomExceptions\NotVaildInputException.cs" />
+    <Compile Include="SodokuBoard\Board.cs" />
+    <Compile Include="SodokuBoard\IBoard.cs" />
+    <Compile Include="InputHandler.cs" />
+    <Compile Include="main.cs" />
+    <Compile Include="CustomExceptions\NonSolvableBoardException.cs" />
+    <Compile Include="CustomExceptions\NotVaildBoardException.cs" />
     <Compile Include="SodokuSolver.cs" />
-    <Compile Include="SolvedCell.cs" />
-    <Compile Include="UnsolvedCell.cs" />
+    <Compile Include="Cell\SolvedCell.cs" />
+    <Compile Include="Cell\UnsolvedCell.cs" />
     <Compile Include="GlobalConstants.cs" />
-    <Compile Include="ICell.cs" />
+    <Compile Include="Cell\ICell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

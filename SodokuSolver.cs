@@ -18,14 +18,24 @@ namespace Sodoku
         public bool SolveSodoku()
         {
             FillSolvedCells();
-            UnsolvedCell firstUnsolvedCell = board.FindFirstUnsolvedCell();
 
-            if (firstUnsolvedCell != null)
+            UnsolvedCell firstUnsolvedCell = board.FindCellWithMinOptions();
+            if (firstUnsolvedCell == null)
             {
-                return true;
+                firstUnsolvedCell = board.FindFirstUnsolvedCell();
+                if (firstUnsolvedCell == null)
+                {
+                    return true;
+                }
+            }
+            
+
+            if (!SolveWithBackTracking(firstUnsolvedCell))
+            {
+                return false;
             }
 
-            return SolveWithBackTracking(firstUnsolvedCell);
+            return true;
         }
 
 
@@ -37,6 +47,10 @@ namespace Sodoku
         private void FillSolvedCells()
         {
             UnsolvedCell currentCell = board.FindCellWithMinOptions();
+            if (currentCell == null)
+            {
+                currentCell = board.FindFirstUnsolvedCell();
+            }
 
             while (currentCell != null && currentCell._options.Count == 1)
             {
@@ -50,9 +64,14 @@ namespace Sodoku
 
         private bool SolveWithBackTracking(UnsolvedCell currentCell)
         {
-            if (board.GetNumOfUnsolvedCells() == 0)
+            if (board.FindFirstUnsolvedCell() == null)
             {
                 return true;
+            }
+
+            if (currentCell._options.Count == 0)
+            {
+                return false;
             }
 
             FillSolvedCells();
@@ -63,16 +82,10 @@ namespace Sodoku
                 nextCell = board.FindFirstUnsolvedCell();
             }
 
+            Board boardCopy = board.CloneBoard();
             if (board.GetCellInPosition(currentCell._row, currentCell._col) is SolvedCell)
             {
-                SolveWithBackTracking(nextCell);
-            }
-
-            Board boardCopy = board.CloneBoard();
-
-            if (currentCell._options.Count == 0) 
-            {
-                return false;
+                return SolveWithBackTracking(nextCell);
             }
 
             
@@ -80,19 +93,29 @@ namespace Sodoku
             {
                 SolvedCell possibleSolvedCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, option);
 
-                boardCopy.ReplaceToSolvedCell(possibleSolvedCell);
-                boardCopy.UpdateBoardOptions(possibleSolvedCell);
-                boardCopy.DecreseUnsolvedCellCount();
+                board.ReplaceToSolvedCell(possibleSolvedCell);
+                board.UpdateBoardOptions(possibleSolvedCell);
+                board.DecreseUnsolvedCellCount();
 
                 if (SolveWithBackTracking(nextCell))
                 {
                     return true;
                 }
 
-                boardCopy = board.CloneBoard();
+                board = boardCopy.CloneBoard();
             }
 
             return false;
+        }
+
+        public void PrintSodokuBoard()
+        {
+            board.PrintBoard();
+        }
+
+        public bool IsValidSodokuBoard()
+        {
+            return board.IsValidBoard();
         }
     }
 
