@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,11 @@ namespace Sodoku
     {
         public static void Main(String[] args)
         {
-            
+
+            Console.SetIn(new StreamReader(Console.OpenStandardInput(8192)));
             string input = Console.ReadLine();
+
+
             if (!InputHandler.IsValidInput(input)) 
             {
                 throw new NotVaildInputException();
@@ -27,19 +31,26 @@ namespace Sodoku
             {
                 throw new NotVaildBoardException();
             }
+
             Stopwatch stopwatch = new Stopwatch();
+
             stopwatch.Start();
-            //solver.PrintSodokuBoard();
-            if (solver.SolveSodoku())
+            bool solved = solver.SolveSodoku();
+            stopwatch.Stop();
+
+            if (solved)
             {
                 solver.PrintSodokuBoard();
+                Console.WriteLine(solver.counter);
             }
             else 
             {
+                Console.WriteLine(solver.counter);
+
                 Console.WriteLine("not solved");
             }
-            stopwatch.Stop();
-            Console.WriteLine($"Elapsed time: {stopwatch.Elapsed.TotalSeconds} seconds");
-        }
+            
+            Console.WriteLine($"Elapsed time: {stopwatch.ElapsedMilliseconds} milliseconds");
+        }   
     }
 }
