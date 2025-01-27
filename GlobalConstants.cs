@@ -8,7 +8,13 @@ namespace Sodoku
 {
     public static class GlobalConstants
     {
-        public const int BoardLength = BoxLength*BoxLength;
-        public const int BoxLength = 3;
+        public static int BoxLength = 3;
+        public static int BoardLength = BoxLength * BoxLength;
+        public static int pairSize = 2;
+        public static void UpdateConstants(int newBoxLength)
+        {
+            BoxLength = newBoxLength;
+            BoardLength = BoxLength * BoxLength;
+        }
     }
 }
