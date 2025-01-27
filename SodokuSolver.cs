@@ -1,15 +1,21 @@
-﻿using System;
+﻿using Sodoku.Heuristics;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Sodoku.GlobalConstants;
+using static Sodoku.Heuristics.HiddenSingleHeuristic;
+using static Sodoku.Heuristics.NakedPairsHeuristic;
+
 
 namespace Sodoku
 {
-    internal class SodokuSolver
+    public class SodokuSolver
     {
-        private Board board;
+        private IBoard board;
+        public int counter= 0;
 
         public SodokuSolver(int[] input)
         {
@@ -17,7 +23,7 @@ namespace Sodoku
         }
         public bool SolveSodoku()
         {
-            FillSolvedCells();
+            SolveWithHeuristics();
 
             UnsolvedCell firstUnsolvedCell = board.FindCellWithMinOptions();
             if (firstUnsolvedCell == null)
@@ -28,7 +34,6 @@ namespace Sodoku
                     return true;
                 }
             }
-            
 
             if (!SolveWithBackTracking(firstUnsolvedCell))
             {
@@ -44,37 +49,43 @@ namespace Sodoku
         /// if there is a cell with 1 option it turns it into a solved cell
         /// </summary>
         /// <param name="board"></param>
-        private void FillSolvedCells()
+        private void SolveWithHeuristics()
         {
-            UnsolvedCell currentCell = board.FindCellWithMinOptions();
-            if (currentCell == null)
-            {
-                currentCell = board.FindFirstUnsolvedCell();
-            }
+            bool isChanged = true;
 
-            while (currentCell != null && currentCell._options.Count == 1)
+            while (isChanged)
             {
-                SolvedCell tempCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, currentCell._options.First());
-                board.ReplaceToSolvedCell(tempCell);
-                board.UpdateBoardOptions(tempCell);
-                board.DecreseUnsolvedCellCount();
-                currentCell = board.FindCellWithMinOptions();
+                isChanged = false;
+                // Check for an unsolved cell with exactly one option
+                UnsolvedCell currentCell = board.FindCellWithMinOptions();
+
+                if (currentCell != null && currentCell._options.Count == 1)
+                {
+                    SolvedCell tempCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, currentCell._options.First());
+                    board.ReplaceToSolvedCell(tempCell);
+                    board.UpdateBoardOptions(tempCell);
+                    isChanged = true;
+                }
+
+                isChanged |= HandleHiddenSingles(board);
+                isChanged |= FindAndEliminateNakedPairs(board);
             }
         }
 
         private bool SolveWithBackTracking(UnsolvedCell currentCell)
         {
+            counter++;
             if (board.FindFirstUnsolvedCell() == null)
             {
                 return true;
             }
 
-            if (currentCell._options.Count == 0)
+            if (!board.IsValidBoard())
             {
                 return false;
             }
 
-            FillSolvedCells();
+            SolveWithHeuristics();
 
             UnsolvedCell nextCell = board.FindCellWithMinOptions();
             if (nextCell == null)
@@ -88,7 +99,6 @@ namespace Sodoku
                 return SolveWithBackTracking(nextCell);
             }
 
-            
             foreach (int option in nextCell._options) 
             {
                 SolvedCell possibleSolvedCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, option);
@@ -101,8 +111,9 @@ namespace Sodoku
                 {
                     return true;
                 }
+                board = boardCopy;
+               
 
-                board = boardCopy.CloneBoard();
             }
 
             return false;
