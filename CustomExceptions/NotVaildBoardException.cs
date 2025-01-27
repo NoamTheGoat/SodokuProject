@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodoku
 {
-    internal class NotVaildBoardException : Exception
+    public class NotVaildBoardException : Exception
     {
         public NotVaildBoardException()
         { }

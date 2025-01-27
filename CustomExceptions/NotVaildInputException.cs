@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodoku.CustomExceptions
 {
-    internal class NotVaildInputException : Exception
+    public class NotVaildInputException : Exception
     {
         public NotVaildInputException()
         { }

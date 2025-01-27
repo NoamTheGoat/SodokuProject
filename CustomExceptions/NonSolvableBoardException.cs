@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodoku
 {
-    internal class NonSolvableBoardException : Exception
+    public class NonSolvableBoardException : Exception
     {
         public NonSolvableBoardException()
         { }
