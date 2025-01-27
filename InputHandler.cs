@@ -7,7 +7,7 @@ using static Sodoku.GlobalConstants;
 
 namespace Sodoku
 {
-    internal static class InputHandler
+    public static class InputHandler
     {
         public static int[] StringToArray(string input)
         {
@@ -15,17 +15,22 @@ namespace Sodoku
             for (int i = 0; i < input.Length; i++)
             {
                 result[i] = input[i] - '0';
+                if (result[i] < -1 || result[i] > BoardLength)
+                {
+                    throw new NotVaildBoardException();
+                }
             }
             return result;
         }
         public static bool IsValidInput(string input)
         {
-            if (input != null && input.Length == BoardLength*BoardLength && input.All(char.IsDigit))
+            double len = Math.Sqrt(Math.Sqrt(input.Length));
+            if (input != null && len == Math.Round(len))
             {
+                UpdateConstants((int)len);
                 return true; 
             } 
             return false;
         }
-
     }
 }
