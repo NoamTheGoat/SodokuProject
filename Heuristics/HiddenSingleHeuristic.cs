@@ -29,7 +29,7 @@ namespace Sodoku.Heuristics
             bool isChanged = false;
             var optionDictionary = new Dictionary<int, List<UnsolvedCell>>();
 
-            // Step 1: Map each option to the cells it appears in
+            // Map each option to the cells it appears in
             foreach (var cell in unsolvedCells)
             {
                 foreach (int option in cell._options)
@@ -42,7 +42,7 @@ namespace Sodoku.Heuristics
                 }
             }
 
-            // Step 2: Apply naked singles
+            // Apply naked singles
             foreach (var kvp in optionDictionary)
             {
                 int option = kvp.Key;
@@ -55,7 +55,7 @@ namespace Sodoku.Heuristics
                     {
                         cell._options.Clear();
                         cell._options.Add(option);
-                        isChanged = true; // A change has been made
+                        isChanged = true;
                     }
                 }
             }
@@ -64,3 +64,4 @@ namespace Sodoku.Heuristics
         }
     }
 }
+
