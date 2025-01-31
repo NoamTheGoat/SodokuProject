@@ -68,6 +68,21 @@ namespace Sodoku
             return boxNumber;
         }
 
+        /// <summary>
+        /// Calculates the top right Coordinates of a box
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        private (int,int) CalculateCoordinateByBox(int box)
+        {
+            int boxRow = (box - 1) / BoxLength;
+            int boxCol = (box - 1) % BoxLength;
+
+            int startRow = boxRow * BoxLength;
+            int startCol = boxCol * BoxLength;
+            return (startRow, startCol);
+        }
+
         private void InitializeCellOptions()
         {
             for (int i = 0; i < BoardLength; i++)
@@ -127,11 +142,7 @@ namespace Sodoku
         /// <param name="cell"></param>
         private void UpdateOptionsByBox(SolvedCell cell)
         {
-            int boxRow = (cell._box - 1) / BoxLength;  
-            int boxCol = (cell._box - 1) % BoxLength;   
-
-            int startRow = boxRow * BoxLength;  
-            int startCol = boxCol * BoxLength;
+            var (startRow, startCol) = CalculateCoordinateByBox(cell._box);
 
             for (int i = 0; i < BoxLength; i++)
             {
@@ -221,11 +232,8 @@ namespace Sodoku
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
 
-            int boxRow = (box - 1) / BoxLength;
-            int boxCol = (box - 1) % BoxLength;
+            var (startRow, startCol) = CalculateCoordinateByBox(box);
 
-            int startRow = boxRow * BoxLength;
-            int startCol = boxCol * BoxLength;
             for (int i = 0; i < BoxLength; i++)
             {
                 for (int j = 0; j < BoxLength; j++)
@@ -351,14 +359,14 @@ namespace Sodoku
         /// </summary>
         public void PrintBoard()
         {
-            int boxSize = (int)Math.Sqrt(BoardLength); // Assuming BoardLength is a perfect square.
+            int boxSize = (int)Math.Sqrt(BoardLength); 
 
             for (int row = 0; row < BoardLength; row++)
             {
                 // Print horizontal separators between boxes
                 if (row % boxSize == 0 && row != 0)
                 {
-                    Console.WriteLine(new string('-', BoardLength * 3 + (boxSize - 1) * 2 - 1));
+                    Console.WriteLine(new string('─', BoardLength * 3 + (boxSize - 1) * 2 - 1));
                 }
 
                 for (int col = 0; col < BoardLength; col++)
@@ -366,22 +374,20 @@ namespace Sodoku
                     // Print vertical separators between boxes
                     if (col % boxSize == 0 && col != 0)
                     {
-                        Console.Write("| ");
+                        Console.Write("│ ");
                     }
 
                     if (_board[row, col] is SolvedCell tempCell)
                     {
-                        // Print solved cell value (align for 2-digit numbers)
                         Console.Write(tempCell._value.ToString().PadLeft(2) + " ");
                     }
                     else
                     {
-                        // Print placeholder for unsolved cells
                         Console.Write(". ".PadLeft(3));
                     }
                 }
 
-                Console.WriteLine(); // Move to the next line after each row
+                Console.WriteLine();
             }
 
             Console.WriteLine();
