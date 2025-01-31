@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using static Sodoku.GlobalConstants;
 using static Sodoku.Heuristics.HiddenSingleHeuristic;
 using static Sodoku.Heuristics.NakedPairsHeuristic;
+using static Sodoku.Heuristics.NakedSetsHeuristic;
 
 
 namespace Sodoku
@@ -56,9 +57,9 @@ namespace Sodoku
             while (isChanged)
             {
                 isChanged = false;
-                // Check for an unsolved cell with exactly one option
                 UnsolvedCell currentCell = board.FindCellWithMinOptions();
 
+                //Naked single heuristic
                 if (currentCell != null && currentCell._options.Count == 1)
                 {
                     SolvedCell tempCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, currentCell._options.First());
@@ -67,8 +68,20 @@ namespace Sodoku
                     isChanged = true;
                 }
 
-                isChanged |= HandleHiddenSingles(board);
-                isChanged |= FindAndEliminateNakedPairs(board);
+                if (BoardLength <= StandardBoardSize) 
+                {
+                    isChanged |= HandleHiddenSingles(board);
+
+                    for (int i = 2; i < BoardLength-1; i++)
+                    {
+                        isChanged |= HandleNakedSets(board, i);
+                    }
+                }
+                else
+                {
+                    isChanged |= HandleHiddenSingles(board);
+                    isChanged |= HandleNakedPairs(board);
+                }
             }
         }
 
@@ -86,6 +99,7 @@ namespace Sodoku
             }
 
             SolveWithHeuristics();
+            Board boardCopy = board.CloneBoard();
 
             UnsolvedCell nextCell = board.FindCellWithMinOptions();
             if (nextCell == null)
@@ -93,7 +107,7 @@ namespace Sodoku
                 nextCell = board.FindFirstUnsolvedCell();
             }
 
-            Board boardCopy = board.CloneBoard();
+            //the current cell has been solved by the heuristics
             if (board.GetCellInPosition(currentCell._row, currentCell._col) is SolvedCell)
             {
                 return SolveWithBackTracking(nextCell);
@@ -112,8 +126,6 @@ namespace Sodoku
                     return true;
                 }
                 board = boardCopy;
-               
-
             }
 
             return false;
@@ -122,6 +134,26 @@ namespace Sodoku
         public void PrintSodokuBoard()
         {
             board.PrintBoard();
+        }
+
+        public string ReturnBoardAsString()
+        {
+            string result = "";
+            for (int i = 0; i < BoardLength; i++)
+            {
+                for (int j = 0; j < BoardLength; j++)
+                {
+                    if (board.GetCellInPosition(i, j) is SolvedCell currentCell)
+                    {
+                        result += currentCell._value;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            return result;
         }
 
         public bool IsValidSodokuBoard()
