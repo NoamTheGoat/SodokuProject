@@ -11,14 +11,14 @@ namespace Sodoku
         void InitializeBoard(int[] input);
         bool IsValidBoard();
         Board CloneBoard();
-        int GetNumOfUnsolvedCells();
+        //int GetNumOfUnsolvedCells();
         ICell GetCellInPosition(int x, int y);
         UnsolvedCell FindCellWithMinOptions();
         void PrintBoard();
         UnsolvedCell FindFirstUnsolvedCell();
         void ReplaceToSolvedCell(SolvedCell tempCell);
         void UpdateBoardOptions(SolvedCell tempCell);
-        void DecreseUnsolvedCellCount();
+        //void DecreseUnsolvedCellCount();
         List<UnsolvedCell> GetRow(int i);
         List<UnsolvedCell> GetCol(int i);
         List<UnsolvedCell> GetBox(int v);

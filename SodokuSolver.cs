@@ -119,7 +119,6 @@ namespace Sodoku
 
                 board.ReplaceToSolvedCell(possibleSolvedCell);
                 board.UpdateBoardOptions(possibleSolvedCell);
-                board.DecreseUnsolvedCellCount();
 
                 if (SolveWithBackTracking(nextCell))
                 {

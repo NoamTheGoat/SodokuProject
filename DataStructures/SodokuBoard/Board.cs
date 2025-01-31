@@ -11,21 +11,15 @@ namespace Sodoku
     public class Board : IBoard
     {
         private ICell[,] _board;
-        private int _numOfSolvedCells;
-        private int _numOfUnsolvedCells;
         public Board(int[] input) 
         {
             _board = new ICell[BoardLength, BoardLength];
-            _numOfSolvedCells = 0;
-            _numOfUnsolvedCells = 0;
             InitializeBoard(input);
             InitializeCellOptions();
         }
         public Board()
         {
             _board = new ICell[BoardLength, BoardLength];
-            _numOfSolvedCells = 0;
-            _numOfUnsolvedCells = 0;
         }
 
         /// <summary>
@@ -43,12 +37,10 @@ namespace Sodoku
                     if (input[currentIndex] == 0)
                     {
                         _board[i, j] = new UnsolvedCell(i, j, CalculateBox(i, j));
-                        _numOfUnsolvedCells++;
                     }
                     else
                     {
                         _board[i, j] = new SolvedCell(i, j, CalculateBox(i, j), input[currentIndex]);
-                        _numOfSolvedCells++;
                     }
                 }
             }
@@ -248,24 +240,6 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Gets the number of unsolved cells
-        /// </summary>
-        /// <returns></returns>
-        public int GetNumOfUnsolvedCells()
-        {
-            return _numOfUnsolvedCells;
-        }
-
-        /// <summary>
-        /// Gets the number of solved cells
-        /// </summary>
-        /// <returns></returns>
-        public int GetNumOfSolvedCells()
-        {
-            return _numOfSolvedCells;
-        }
-
-        /// <summary>
         /// Gets a cell in a position
         /// </summary>
         /// <param name="x"></param>
@@ -297,16 +271,6 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Decreases the amount of unsolved cells
-        /// used when replacing cells
-        /// </summary>
-        public void DecreseUnsolvedCellCount()
-        {
-            this._numOfUnsolvedCells--;
-            this._numOfSolvedCells++;
-        }
-
-        /// <summary>
         /// Does a deep copy of a board
         /// </summary>
         /// <returns></returns>
@@ -330,8 +294,6 @@ namespace Sodoku
                     }
                 }
             }
-            tempBoard._numOfSolvedCells = _numOfSolvedCells;
-            tempBoard._numOfUnsolvedCells = _numOfUnsolvedCells;
             return tempBoard;
         }
 
