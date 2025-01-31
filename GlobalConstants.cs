@@ -10,7 +10,8 @@ namespace Sodoku
     {
         public static int BoxLength = 3;
         public static int BoardLength = BoxLength * BoxLength;
-        public static int pairSize = 2;
+        public static int PairSize = 2;
+        public static int StandardBoardSize = 9;
         public static void UpdateConstants(int newBoxLength)
         {
             BoxLength = newBoxLength;
