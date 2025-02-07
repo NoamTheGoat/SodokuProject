@@ -12,13 +12,12 @@ namespace Sodoku.IO
     public static class FileHandler
     {
         /// <summary>
-        /// Reads the Sudoku board input from a file specified by the user. 
+        /// Reads the Sodoku board input from a file specified by the user. 
         /// </summary>
         /// <param name="sodokuBoardInput">The Sudoku board input read from the file.</param>
         /// <param name="filePath">The path to the file containing the Sudoku board input.</param>
         /// <returns>
-        /// Returns true if the file was successfully read and the input was retrieved, 
-        /// otherwise, false if the user chose to return to the main menu.
+        /// Returns true if the file was successfully read otherwise, false.
         /// </returns>
         public static bool ReadFromFile(out string sodokuBoardInput, out string filePath)
         {
