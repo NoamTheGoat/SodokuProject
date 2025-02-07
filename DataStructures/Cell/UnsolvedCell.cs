@@ -7,6 +7,10 @@ using static Sodoku.GlobalConstants;
 
 namespace Sodoku
 {
+    /// <summary>
+    /// Represents a cell in the Sudoku board that has not yet been solved. 
+    /// It maintains a set of possible values (options) that can fill the cell.
+    /// </summary>
     public class UnsolvedCell : ICell
     {
         public HashSet<int> _options { get; }
@@ -22,13 +26,6 @@ namespace Sodoku
             _options = new HashSet<int>();
 
             InitializeCell();
-        }
-        public UnsolvedCell(int row, int col, int box, int preFilledCellValue)
-        {
-            _row = row;
-            _col = col;
-            _box = box;
-            _options = new HashSet<int>{preFilledCellValue};
         }
 
         /// <summary>

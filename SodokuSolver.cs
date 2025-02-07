@@ -16,6 +16,8 @@ namespace Sodoku
     public class SodokuSolver
     {
         private IBoard board;
+
+        //Used for counting the number of recurive calls
         public int counter= 0;
 
         public SodokuSolver(int[] input)
@@ -46,8 +48,10 @@ namespace Sodoku
 
 
         /// <summary>
-        /// Solves the sodoku like a human, 
-        /// if there is a cell with 1 option it turns it into a solved cell
+        ///  Solves the Sudoku board using human-like heuristics, 
+        ///  such as naked singles, hidden singles, and naked sets.
+        ///  if the board is 9x9 or smaller it uses naked sets, 
+        ///  and if the boards is bigger it uses naked pairs because it is more efficient for bigger boards
         /// </summary>
         /// <param name="board"></param>
         private void SolveWithHeuristics()
@@ -62,7 +66,8 @@ namespace Sodoku
                 //Naked single heuristic
                 if (currentCell != null && currentCell._options.Count == 1)
                 {
-                    SolvedCell tempCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, currentCell._options.First());
+                    SolvedCell tempCell = new SolvedCell
+                        (currentCell._row, currentCell._col, currentCell._box, currentCell._options.First());
                     board.ReplaceToSolvedCell(tempCell);
                     board.UpdateBoardOptions(tempCell);
                     isChanged = true;
@@ -85,6 +90,12 @@ namespace Sodoku
             }
         }
 
+        /// <summary>
+        /// A recursive algorithm that attempts to solve the Sudoku puzzle,
+        /// using backtracking from a given unsolved cell.
+        /// </summary>
+        /// <param name="currentCell">The current unsolved cell from which to start backtracking.</param>
+        /// <returns>True if a solution is found, otherwise, false</returns>
         private bool SolveWithBackTracking(UnsolvedCell currentCell)
         {
             counter++;
@@ -115,7 +126,7 @@ namespace Sodoku
 
             foreach (int option in nextCell._options) 
             {
-                SolvedCell possibleSolvedCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, option);
+                var possibleSolvedCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, option);
 
                 board.ReplaceToSolvedCell(possibleSolvedCell);
                 board.UpdateBoardOptions(possibleSolvedCell);
@@ -135,6 +146,11 @@ namespace Sodoku
             board.PrintBoard();
         }
 
+        /// <summary>
+        /// Converts the board back to string for exporting
+        /// </summary>
+        /// <returns>A string representing the Sudoku board, 
+        /// or null if the board is not fully solved.</returns>
         public string ReturnBoardAsString()
         {
             string result = "";
@@ -144,7 +160,7 @@ namespace Sodoku
                 {
                     if (board.GetCellInPosition(i, j) is SolvedCell currentCell)
                     {
-                        result += currentCell._value;
+                        result += ((char)(currentCell._value + '0')).ToString();
                     }
                     else
                     {
@@ -158,6 +174,11 @@ namespace Sodoku
         public bool IsValidSodokuBoard()
         {
             return board.IsValidBoard();
+        }
+
+        public bool IsSodokuBoardSolved()
+        {
+            return board.IsBoardSolved();
         }
     }
 

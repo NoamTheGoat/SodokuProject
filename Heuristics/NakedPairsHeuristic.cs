@@ -10,6 +10,15 @@ namespace Sodoku.Heuristics
 {
     public static class NakedPairsHeuristic
     {
+        /// <summary>
+        /// checks if two unsolved cells in a row, column, or box contain exactly the same two options.
+        /// These options can be eliminated from other cells in the same group (row, column, or box).
+        /// This naked pairs is more efficient than naked sets with a set size of 2 so it is used for bigger boards.
+        /// </summary>
+        /// <param name="board">The Sudoku board on which naked pairs are to be detected and processed.</param>
+        /// <returns>
+        /// Returns true if any changes were made, otherwise, false.
+        /// </returns>
         public static bool HandleNakedPairs(IBoard board)
         {
             bool isChanged = false;
@@ -59,6 +68,9 @@ namespace Sodoku.Heuristics
             return isChanged;
         }
 
+        /// <summary>
+        /// checks if 2 cells have equal options
+        /// </summary>
         private static bool HasEqualOptions(UnsolvedCell Cell1, UnsolvedCell Cell2)
         {
             return Cell1._options.SetEquals(Cell2._options);

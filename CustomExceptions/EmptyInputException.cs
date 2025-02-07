@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sodoku.CustomExceptions
 {
+    /// <summary>
+    /// Exception thrown when the input is empty.
+    /// </summary>
     public class EmptyInputException : Exception
     {
         public EmptyInputException()

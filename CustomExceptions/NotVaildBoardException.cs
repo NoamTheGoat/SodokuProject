@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sodoku
 {
+    /// <summary>
+    /// Exception thrown when the Sudoku board is invalid.
+    /// </summary>
     public class NotVaildBoardException : Exception
     {
         public NotVaildBoardException()

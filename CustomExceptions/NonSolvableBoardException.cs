@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sodoku
 {
+    /// <summary>
+    /// Exception thrown when the Sudoku board cannot be solved.
+    /// </summary>
     public class NonSolvableBoardException : Exception
     {
         public NonSolvableBoardException()

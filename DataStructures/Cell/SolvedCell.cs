@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Sodoku
 {
+    /// <summary>
+    /// Represents a cell in the Sudoku board that has been solved. 
+    /// It contains the fixed value of the cell along with its row, column, and box positions.
+    /// </summary>
     public class SolvedCell : ICell
     {
         public int _value { get; }

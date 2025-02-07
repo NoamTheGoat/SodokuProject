@@ -50,8 +50,10 @@
     <Compile Include="DataStructures\SodokuBoard\Board.cs" />
     <Compile Include="DataStructures\SodokuBoard\IBoard.cs" />
     <Compile Include="Heuristics\NakedSetsHeuristic.cs" />
-    <Compile Include="Input\InputHandler.cs" />
-    <Compile Include="Input\InputUtils.cs" />
+    <Compile Include="IO\FileHandler.cs" />
+    <Compile Include="IO\InputHandler.cs" />
+    <Compile Include="IO\InputUtils.cs" />
+    <Compile Include="IO\SolveBoardWithInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="CustomExceptions\NonSolvableBoardException.cs" />
     <Compile Include="CustomExceptions\NotVaildBoardException.cs" />

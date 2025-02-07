@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using static Sodoku.GlobalConstants;
 
 namespace Sodoku
-{ 
+{
     public class Board : IBoard
     {
         private ICell[,] _board;
-        public Board(int[] input) 
+        public Board(int[] input)
         {
             _board = new ICell[BoardLength, BoardLength];
             InitializeBoard(input);
@@ -23,11 +23,11 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Initializes the board with cells
+        /// Initializes the board using a given array of integers.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">Array of integers representing the board's initial state.</param>
         public void InitializeBoard(int[] input)
-{
+        {
             int currentIndex;
             for (int i = 0; i < BoardLength; i++)
             {
@@ -45,27 +45,27 @@ namespace Sodoku
                 }
             }
         }
+
         /// <summary>
-        /// Calculates the the box of the cell
-        /// if the board is 9x9 a box is 3x3 and there are 9 of them
+        /// Calculates the box number for a cell based on its coordinates.
         /// </summary>
-        /// <param name="xCoordinate"></param>
-        /// <param name="yCoordinate"></param>
-        /// <returns></returns>
+        /// <param name="xCoordinate">The row coordinate of the cell.</param>
+        /// <param name="yCoordinate">The column coordinate of the cell.</param>
+        /// <returns>The box number (1-9).</returns>
         private int CalculateBox(int xCoordinate, int yCoordinate)
         {
-            int boxRow = xCoordinate/BoxLength;
-            int boxCol = yCoordinate/BoxLength;
+            int boxRow = xCoordinate / BoxLength;
+            int boxCol = yCoordinate / BoxLength;
             int boxNumber = boxRow * BoxLength + boxCol + 1;
             return boxNumber;
         }
 
         /// <summary>
-        /// Calculates the top right Coordinates of a box
+        /// Calculates the top-left coordinate of the box.
         /// </summary>
-        /// <param name="box"></param>
-        /// <returns></returns>
-        private (int,int) CalculateCoordinateByBox(int box)
+        /// <param name="box">The box number (1-9).</param>
+        /// <returns>The top-left coordinates of the box.</returns>
+        private (int, int) CalculateCoordinateByBox(int box)
         {
             int boxRow = (box - 1) / BoxLength;
             int boxCol = (box - 1) % BoxLength;
@@ -75,6 +75,9 @@ namespace Sodoku
             return (startRow, startCol);
         }
 
+        /// <summary>
+        /// Updates the unsolved cells options acccording to the solved cells options
+        /// </summary>
         private void InitializeCellOptions()
         {
             for (int i = 0; i < BoardLength; i++)
@@ -88,29 +91,31 @@ namespace Sodoku
                 }
             }
         }
+
         /// <summary>
-        /// Updates the option of the unsolved cell in the row, colum and box
+        /// Updates the options of unsolved cells based on a solved cell's value.
         /// </summary>
-        /// <param name="cell"></param>
+        /// <param name="cell">The solved cell.</param>
         public void UpdateBoardOptions(SolvedCell cell)
         {
             UpdateOptionsByRow(cell);
             UpdateOptionsByCol(cell);
             UpdateOptionsByBox(cell);
         }
+
         /// <summary>
         /// Updates the option of the unsolved cell in the row
         /// </summary>
         /// <param name="cell"></param>
         private void UpdateOptionsByRow(SolvedCell cell)
         {
-            for(int col = 0; col < BoardLength; col++)
+            for (int col = 0; col < BoardLength; col++)
             {
                 if (_board[cell._row, col] is UnsolvedCell tempCell)
                 {
                     tempCell.RemoveOption(cell._value);
-                    _board[cell._row, col] = tempCell; 
-                }  
+                    _board[cell._row, col] = tempCell;
+                }
             }
         }
         /// <summary>
@@ -148,25 +153,26 @@ namespace Sodoku
                 }
             }
         }
+
         /// <summary>
-        /// Finds the unsolved cells with the minimun options
+        /// Finds the unsolved cell with the least options.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The unsolved cell with the fewest options.</returns>
         public UnsolvedCell FindCellWithMinOptions()
         {
             int minOptions = BoardLength;
             UnsolvedCell minOptionsCell = null;
-            for (int i = 0;i < BoardLength; i++)
+            for (int i = 0; i < BoardLength; i++)
             {
                 for (int j = 0; j < BoardLength; j++)
                 {
-                    if (_board[i,j] is UnsolvedCell tempCell)
+                    if (_board[i, j] is UnsolvedCell tempCell)
                     {
                         if (tempCell._options.Count == 1)
                         {
                             return tempCell;
                         }
-                        else if(tempCell._options.Count < minOptions)
+                        else if (tempCell._options.Count < minOptions)
                         {
                             minOptions = tempCell._options.Count;
                             minOptionsCell = tempCell;
@@ -176,18 +182,18 @@ namespace Sodoku
             }
             return minOptionsCell;
         }
+
         /// <summary>
-        /// Checks if the board is valid
-        /// the board is unvalid if there is a cell with 0 options
+        /// Checks if the board is valid (no cells with zero options).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the board is valid, otherwise false.</returns>
         public bool IsValidBoard()
         {
-            for(int i = 0; i < BoardLength; i++)
+            for (int i = 0; i < BoardLength; i++)
             {
                 for (int j = 0; j < BoardLength; j++)
                 {
-                    if (_board[i,j] is UnsolvedCell tempCell && tempCell._options.Count == 0)
+                    if (_board[i, j] is UnsolvedCell tempCell && tempCell._options.Count == 0)
                     {
                         return false;
                     }
@@ -196,10 +202,15 @@ namespace Sodoku
             return true;
         }
 
+        /// <summary>
+        /// Returns a list of unsolved cells in the specified row.
+        /// </summary>
+        /// <param name="row">The row number.</param>
+        /// <returns>List of unsolved cells in the row.</returns>
         public List<UnsolvedCell> GetRow(int row)
         {
-            List<UnsolvedCell> cells = new List<UnsolvedCell>();    
-            for(int i = 0; i < BoardLength; i++)
+            List<UnsolvedCell> cells = new List<UnsolvedCell>();
+            for (int i = 0; i < BoardLength; i++)
             {
                 if (_board[row, i] is UnsolvedCell tempCell)
                 {
@@ -208,6 +219,12 @@ namespace Sodoku
             }
             return cells;
         }
+
+        /// <summary>
+        /// Returns a list of unsolved cells in the specified column.
+        /// </summary>
+        /// <param name="col">The column number.</param>
+        /// <returns>List of unsolved cells in the column.</returns>
         public List<UnsolvedCell> GetCol(int col)
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
@@ -220,6 +237,12 @@ namespace Sodoku
             }
             return cells;
         }
+
+        /// <summary>
+        /// Returns a list of unsolved cells in the specified box.
+        /// </summary>
+        /// <param name="box">The box number.</param>
+        /// <returns>List of unsolved cells in the box.</returns>
         public List<UnsolvedCell> GetBox(int box)
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
@@ -240,40 +263,38 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Gets a cell in a position
+        /// Gets the cell at the specified coordinates.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
+        /// <param name="x">The row coordinate.</param>
+        /// <param name="y">The column coordinate.</param>
+        /// <returns>The cell at the specified position.</returns>
         public ICell GetCellInPosition(int x, int y)
         {
-            return _board[x,y];
+            return _board[x, y];
         }
 
         /// <summary>
-        /// Replaces a cell with an unsolved cell
+        /// Replaces a cell with a solved cell.
         /// </summary>
-        /// <param name="cell"></param>
+        /// <param name="cell">The solved cell.</param>
         public void ReplaceToSolvedCell(SolvedCell cell)
         {
             _board[cell._row, cell._col] = cell;
         }
 
         /// <summary>
-        /// Updates the option of the unsolved cell in the row
+        /// Replaces a cell with an unsolved cell.
         /// </summary>
-        /// <param name="cell"></param>
+        /// <param name="cell">The unsolved cell.</param>
         public void ReplaceToUnsolvedCell(UnsolvedCell cell)
         {
-            // Restore the cell's state to its unsolved state
-            UnsolvedCell originalCell = new UnsolvedCell(cell);
-            _board[cell._row, cell._col] = originalCell;
+            _board[cell._row, cell._col] = cell;
         }
 
         /// <summary>
-        /// Does a deep copy of a board
+        /// Creates a deep copy of the board.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new Board instance with the same state.</returns>
         public Board CloneBoard()
         {
             Board tempBoard = new Board();
@@ -298,9 +319,9 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// finds the first unsolved cell in the board
+        /// Finds the first unsolved cell in the board.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The first unsolved cell, or null if none exist.</returns>
         public UnsolvedCell FindFirstUnsolvedCell()
         {
             for (int i = 0; i < BoardLength; i++)
@@ -321,7 +342,7 @@ namespace Sodoku
         /// </summary>
         public void PrintBoard()
         {
-            int boxSize = (int)Math.Sqrt(BoardLength); 
+            int boxSize = (int)Math.Sqrt(BoardLength);
 
             for (int row = 0; row < BoardLength; row++)
             {
@@ -341,7 +362,7 @@ namespace Sodoku
 
                     if (_board[row, col] is SolvedCell tempCell)
                     {
-                        Console.Write(tempCell._value.ToString().PadLeft(2) + " ");
+                        Console.Write(((char)(tempCell._value + '0')).ToString().PadLeft(2) + " ");
                     }
                     else
                     {
@@ -353,6 +374,39 @@ namespace Sodoku
             }
 
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Checks if the board is completely solved.
+        /// </summary>
+        /// <returns>True if the board is solved, otherwise false.</returns>
+        public bool IsBoardSolved()
+        {
+            var checkHashSet = new HashSet<int>();
+            for (int row = 0; row < BoardLength; row++)
+            {
+                for (int i = 1; i < BoardLength + 1; i++)
+                {
+                    checkHashSet.Add(i);
+                }
+
+                for (int col = 0; col < BoardLength; col++)
+                {
+                    if (_board[row, col] is SolvedCell tempCell)
+                    {
+                        checkHashSet.Remove(tempCell._value);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if (checkHashSet.Count != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
