@@ -11,6 +11,7 @@ using static Sodoku.IO.InputUtils;
 using static Sodoku.IO.FileHandler;
 using static Sodoku.IO.SolveBoardWithInput;
 using System.Web;
+using Sodoku.ProjectFiles.CustomExceptions;
 
 namespace Sodoku.IO
 {
@@ -75,17 +76,17 @@ namespace Sodoku.IO
                 {
                     PrintError("Error: Enter an input that isnt empty!\n");
                 }
-                catch (NonSolvableBoardException)
-                {
-                    PrintError("Error: The board isnt solvable.\n");
-                }
                 catch (NotVaildBoardException)
                 {
-                    PrintError("Error: The board isnt valid.\n");
+                    PrintError("Error: The board is invalid.\n");
                 }
                 catch (NotVaildInputException)
                 {
-                    PrintError("Error: The input isnt valid, try again\n");
+                    PrintError("Error: The input is invalid, try again\n");
+                }
+                catch (InvalidBoardLengthException)
+                {
+                    PrintError("Error: The board length is invalid, try again\n");
                 }
                 catch (ArgumentException)
                 {

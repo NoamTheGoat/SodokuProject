@@ -45,7 +45,8 @@ namespace Sodoku.IO
             {
                 Console.WriteLine("The solved board is:");
                 solver.PrintSodokuBoard();
-                Console.WriteLine($"Board solved in: {stopwatch.ElapsedMilliseconds} milliseconds");
+                Console.WriteLine(solver.ReturnBoardAsString() + "\n");
+                Console.WriteLine($"Board solved in: {stopwatch.ElapsedMilliseconds} milliseconds\n");
                 if (filePath != "")
                 {
 

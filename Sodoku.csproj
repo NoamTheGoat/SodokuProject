@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProjectFiles\CustomExceptions\EmptyInputException.cs" />
+    <Compile Include="ProjectFiles\CustomExceptions\InvalidBoardLengthException.cs" />
     <Compile Include="ProjectFiles\CustomExceptions\NotVaildInputException.cs" />
     <Compile Include="ProjectFiles\Heuristics\HiddenSingleHeuristic.cs" />
     <Compile Include="ProjectFiles\Heuristics\NakedPairsHeuristic.cs" />

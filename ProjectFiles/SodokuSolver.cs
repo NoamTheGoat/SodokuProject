@@ -18,7 +18,7 @@ namespace Sodoku
         private IBoard board;
 
         //Used for counting the number of recurive calls
-        public int counter= 0;
+        public int counter = 0;
 
         public SodokuSolver(int[] input)
         {
@@ -73,11 +73,11 @@ namespace Sodoku
                     isChanged = true;
                 }
 
-                if (BoardLength <= StandardBoardSize) 
+                if (BoardLength <= StandardBoardSize)
                 {
                     isChanged |= HandleHiddenSingles(board);
 
-                    for (int i = 2; i < BoardLength-1; i++)
+                    for (int i = 2; i < BoardLength - 1; i++)
                     {
                         isChanged |= HandleNakedSets(board, i);
                     }
@@ -124,7 +124,7 @@ namespace Sodoku
                 return SolveWithBackTracking(nextCell);
             }
 
-            foreach (int option in nextCell._options) 
+            foreach (int option in nextCell._options)
             {
                 var possibleSolvedCell = new SolvedCell(currentCell._row, currentCell._col, currentCell._box, option);
 
@@ -181,5 +181,4 @@ namespace Sodoku
             return board.IsBoardSolved();
         }
     }
-
 }

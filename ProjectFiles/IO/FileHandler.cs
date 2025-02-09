@@ -32,10 +32,14 @@ namespace Sodoku.IO
                 return false;
             }
 
-            StreamReader sr = new StreamReader(filePath);
-            sodokuBoardInput = sr.ReadLine(); //ReadLine
-            sr.Close();   
+            ReadBoardFromFile(out sodokuBoardInput, filePath);
             return true;
+        }
+        public static void ReadBoardFromFile(out string sodokuBoardInput, string filePath)
+        {
+            StreamReader sr = new StreamReader(filePath);
+            sodokuBoardInput = sr.ReadLine();
+            sr.Close();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Sodoku.CustomExceptions;
+using Sodoku.ProjectFiles.CustomExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,17 +40,26 @@ namespace Sodoku.IO
         /// <exception cref="EmptyInputException">Thrown when the input is empty.</exception>
         public static bool IsValidInput(string input)
         {
+
             if (input == "")
             {
                 throw new EmptyInputException();
             }
 
             double len = Math.Sqrt(Math.Sqrt(input.Length));
-            if (input != null && len == Math.Round(len) && len<=5)
+            if (input.Length > Math.Pow(MaxBoxSize, 4))
+            {
+                PrintError("max board length: 625");
+            }
+            if (len != Math.Round(len))
+            {
+                throw new InvalidBoardLengthException();
+            }
+            if (input != null)
             {
                 UpdateConstants((int)len);
-                return true; 
-            } 
+                return true;
+            }
             return false;
         }
 

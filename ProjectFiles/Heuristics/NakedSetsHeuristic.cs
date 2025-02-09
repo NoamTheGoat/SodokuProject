@@ -55,7 +55,7 @@ namespace Sodoku.Heuristics
                 return false;
             }
 
-            for (int i = 0; i < unsolvedCells.Count - setSize;  i++)
+            for (int i = 0; i < unsolvedCells.Count - setSize; i++)
             {
                 var subset = unsolvedCells.GetRange(i, setSize);
                 var optionsUnion = new HashSet<int>();
