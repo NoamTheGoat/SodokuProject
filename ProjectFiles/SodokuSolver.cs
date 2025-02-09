@@ -77,7 +77,7 @@ namespace Sodoku
                 {
                     isChanged |= HandleHiddenSingles(board);
 
-                    for (int i = 2; i < BoardLength - 1; i++)
+                    for (int i = 2; i < BoardLength; i++)
                     {
                         isChanged |= HandleNakedSets(board, i);
                     }
