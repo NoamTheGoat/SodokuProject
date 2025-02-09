@@ -43,29 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomExceptions\EmptyInputException.cs" />
-    <Compile Include="CustomExceptions\NotVaildInputException.cs" />
-    <Compile Include="Heuristics\HiddenSingleHeuristic.cs" />
-    <Compile Include="Heuristics\NakedPairsHeuristic.cs" />
-    <Compile Include="DataStructures\SodokuBoard\Board.cs" />
-    <Compile Include="DataStructures\SodokuBoard\IBoard.cs" />
-    <Compile Include="Heuristics\NakedSetsHeuristic.cs" />
-    <Compile Include="IO\FileHandler.cs" />
-    <Compile Include="IO\InputHandler.cs" />
-    <Compile Include="IO\InputUtils.cs" />
-    <Compile Include="IO\SolveBoardWithInput.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="CustomExceptions\NonSolvableBoardException.cs" />
-    <Compile Include="CustomExceptions\NotVaildBoardException.cs" />
-    <Compile Include="SodokuSolver.cs" />
-    <Compile Include="DataStructures\Cell\SolvedCell.cs" />
-    <Compile Include="DataStructures\Cell\UnsolvedCell.cs" />
-    <Compile Include="GlobalConstants.cs" />
-    <Compile Include="DataStructures\Cell\ICell.cs" />
+    <Compile Include="ProjectFiles\CustomExceptions\EmptyInputException.cs" />
+    <Compile Include="ProjectFiles\CustomExceptions\NotVaildInputException.cs" />
+    <Compile Include="ProjectFiles\Heuristics\HiddenSingleHeuristic.cs" />
+    <Compile Include="ProjectFiles\Heuristics\NakedPairsHeuristic.cs" />
+    <Compile Include="ProjectFiles\DataStructures\SodokuBoard\Board.cs" />
+    <Compile Include="ProjectFiles\DataStructures\SodokuBoard\IBoard.cs" />
+    <Compile Include="ProjectFiles\Heuristics\NakedSetsHeuristic.cs" />
+    <Compile Include="ProjectFiles\IO\FileHandler.cs" />
+    <Compile Include="ProjectFiles\IO\InputHandler.cs" />
+    <Compile Include="ProjectFiles\IO\InputUtils.cs" />
+    <Compile Include="ProjectFiles\IO\SolveBoardWithInput.cs" />
+    <Compile Include="ProjectFiles\Program.cs" />
+    <Compile Include="ProjectFiles\CustomExceptions\NonSolvableBoardException.cs" />
+    <Compile Include="ProjectFiles\CustomExceptions\NotVaildBoardException.cs" />
+    <Compile Include="ProjectFiles\SodokuSolver.cs" />
+    <Compile Include="ProjectFiles\DataStructures\Cell\SolvedCell.cs" />
+    <Compile Include="ProjectFiles\DataStructures\Cell\UnsolvedCell.cs" />
+    <Compile Include="ProjectFiles\GlobalConstants.cs" />
+    <Compile Include="ProjectFiles\DataStructures\Cell\ICell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="ProjectFiles\App.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
