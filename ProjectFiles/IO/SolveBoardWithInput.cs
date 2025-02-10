@@ -31,6 +31,7 @@ namespace Sodoku.IO
 
             SodokuSolver solver = new SodokuSolver(a);
             solver.PrintSodokuBoard();
+            
             if (!solver.IsValidSodokuBoard())
             {
                 throw new NotVaildBoardException();
@@ -44,12 +45,8 @@ namespace Sodoku.IO
             if (boardSolved)
             {
                 Console.WriteLine("The solved board is:\n");
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
                 solver.PrintSodokuBoard();
                 Console.WriteLine(solver.ReturnBoardAsString() + "\n");
-                Console.ResetColor();
-
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Board solved in: {stopwatch.ElapsedMilliseconds} milliseconds\n");
                 Console.ResetColor();
