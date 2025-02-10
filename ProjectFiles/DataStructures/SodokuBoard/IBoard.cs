@@ -17,9 +17,9 @@ namespace Sodoku
         UnsolvedCell FindFirstUnsolvedCell();
         void ReplaceToSolvedCell(SolvedCell tempCell);
         void UpdateBoardOptions(SolvedCell tempCell);
-        List<UnsolvedCell> GetRow(int i);
-        List<UnsolvedCell> GetCol(int i);
-        List<UnsolvedCell> GetBox(int v);
+        List<UnsolvedCell> GetUnsolvedCellsInRow(int i);
+        List<UnsolvedCell> GetUnsolvedCellsInCol(int i);
+        List<UnsolvedCell> GetUnsolvedCellsInBox(int v);
         void ReplaceToUnsolvedCell(UnsolvedCell cell);
         bool IsBoardSolved();
     }

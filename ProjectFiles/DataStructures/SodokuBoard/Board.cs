@@ -203,11 +203,11 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Returns a list of unsolved cells in the specified row.
+        /// Returns a list of UNSOLVED cells in the specified row.
         /// </summary>
         /// <param name="row">The row number.</param>
         /// <returns>List of unsolved cells in the row.</returns>
-        public List<UnsolvedCell> GetRow(int row)
+        public List<UnsolvedCell> GetUnsolvedCellsInRow(int row)
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
             for (int i = 0; i < BoardLength; i++)
@@ -221,11 +221,29 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Returns a list of unsolved cells in the specified column.
+        /// Returns a list of SOLVED cells in the specified row.
+        /// </summary>
+        /// <param name="row">The row number.</param>
+        /// <returns>List of unsolved cells in the row.</returns>
+        public List<SolvedCell> GetSolvedCellsInRow(int row)
+        {
+            List<SolvedCell> cells = new List<SolvedCell>();
+            for (int i = 0; i < BoardLength; i++)
+            {
+                if (_board[row, i] is SolvedCell tempCell)
+                {
+                    cells.Add(tempCell);
+                }
+            }
+            return cells;
+        }
+
+        /// <summary>
+        /// Returns a list of UNSOLVED cells in the specified column.
         /// </summary>
         /// <param name="col">The column number.</param>
         /// <returns>List of unsolved cells in the column.</returns>
-        public List<UnsolvedCell> GetCol(int col)
+        public List<UnsolvedCell> GetUnsolvedCellsInCol(int col)
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
             for (int i = 0; i < BoardLength; i++)
@@ -239,11 +257,29 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// Returns a list of unsolved cells in the specified box.
+        /// Returns a list of SOLVED cells in the specified column.
+        /// </summary>
+        /// <param name="col">The column number.</param>
+        /// <returns>List of unsolved cells in the column.</returns>
+        public List<SolvedCell> GetSolvedCellsInCol(int col)
+        {
+            List<SolvedCell> cells = new List<SolvedCell>();
+            for (int i = 0; i < BoardLength; i++)
+            {
+                if (_board[i, col] is SolvedCell tempCell)
+                {
+                    cells.Add(tempCell);
+                }
+            }
+            return cells;
+        }
+
+        /// <summary>
+        /// Returns a list of UNSOLVED cells in the specified box.
         /// </summary>
         /// <param name="box">The box number.</param>
         /// <returns>List of unsolved cells in the box.</returns>
-        public List<UnsolvedCell> GetBox(int box)
+        public List<UnsolvedCell> GetUnsolvedCellsInBox(int box)
         {
             List<UnsolvedCell> cells = new List<UnsolvedCell>();
 
@@ -254,6 +290,30 @@ namespace Sodoku
                 for (int j = 0; j < BoxLength; j++)
                 {
                     if (_board[startRow + i, startCol + j] is UnsolvedCell tempCell)
+                    {
+                        cells.Add(tempCell);
+                    }
+                }
+            }
+            return cells;
+        }
+
+        /// <summary>
+        /// Returns a list of SOLVED cells in the specified box.
+        /// </summary>
+        /// <param name="box">The box number.</param>
+        /// <returns>List of unsolved cells in the box.</returns>
+        public List<SolvedCell> GetSolvedCellsInBox(int box)
+        {
+            List<SolvedCell> cells = new List<SolvedCell>();
+
+            var (startRow, startCol) = CalculateCoordinateByBox(box);
+
+            for (int i = 0; i < BoxLength; i++)
+            {
+                for (int j = 0; j < BoxLength; j++)
+                {
+                    if (_board[startRow + i, startCol + j] is SolvedCell tempCell)
                     {
                         cells.Add(tempCell);
                     }
@@ -382,31 +442,36 @@ namespace Sodoku
         /// <returns>True if the board is solved, otherwise false.</returns>
         public bool IsBoardSolved()
         {
-            var checkHashSet = new HashSet<int>();
-            for (int row = 0; row < BoardLength; row++)
+            for(int i = 0; i < BoardLength; i++)
             {
-                for (int i = 1; i < BoardLength + 1; i++)
-                {
-                    checkHashSet.Add(i);
-                }
-
-                for (int col = 0; col < BoardLength; col++)
-                {
-                    if (_board[row, col] is SolvedCell tempCell)
-                    {
-                        checkHashSet.Remove(tempCell._value);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                if (checkHashSet.Count != 0)
-                {
+                if (!IsValidSet(GetSolvedCellsInRow(i)))
                     return false;
-                }
+                if (!IsValidSet(GetSolvedCellsInCol(i)))
+                    return false;
+                if (!IsValidSet(GetSolvedCellsInBox(i+1)))
+                    return false;
             }
+
             return true;
         }
+
+        // Helper method to check if a set contains exactly {1, ..., BoardLength}
+        private bool IsValidSet(List<SolvedCell> solvedCellGroup)
+        {
+            if(solvedCellGroup.Count != BoardLength)
+            {
+                return false;
+            }
+
+            var checkHashSet = new HashSet<int>();
+
+            foreach (var cell in solvedCellGroup)
+            {
+                checkHashSet.Add(cell._value);
+            }
+
+            return checkHashSet.Count == BoardLength;
+        }
+
     }
 }
