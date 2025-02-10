@@ -12,10 +12,10 @@ namespace Sodoku.IO
     public static class InputUtils
     {
         /// <summary>
-        /// Parses the input string into an integer array representing a Sudoku board.
+        /// Parses the input string into an integer array representing a Sodoku board.
         /// </summary>
-        /// <param name="input">A string representing the Sudoku board input.</param>
-        /// <returns>An integer array representing the parsed Sudoku board.</returns>
+        /// <param name="input">A string representing the Sodoku board input.</param>
+        /// <returns>An integer array representing the parsed Sodoku board.</returns>
         /// <exception cref="NotVaildBoardException">
         /// Thrown when an invalid value is encountered in the input.</exception>
         public static int[] InputParser(string input)
@@ -33,9 +33,9 @@ namespace Sodoku.IO
         }
 
         /// <summary>
-        /// Validates the input string to check if it represents a valid Sudoku board.
+        /// Validates the input string to check if it represents a valid Sodoku board.
         /// </summary>
-        /// <param name="input">A string representing the Sudoku board input.</param>
+        /// <param name="input">A string representing the Sodoku board input.</param>
         /// <returns>True if the input is valid, otherwise false.</returns>
         /// <exception cref="EmptyInputException">Thrown when the input is empty.</exception>
         public static bool IsValidInput(string input)

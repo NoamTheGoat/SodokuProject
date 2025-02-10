@@ -16,6 +16,6 @@ namespace Sodoku
         public static void Main(String[] args)
         {
             RunProgram();
-        }   
+        }
     }
 }

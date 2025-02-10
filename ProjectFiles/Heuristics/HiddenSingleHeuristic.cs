@@ -11,7 +11,7 @@ namespace Sodoku.Heuristics
     /// A hidden single occurs when a number can only appear in one unsolved cell 
     /// within a row, column, or box, even if other numbers are also options for that cell.
     /// </summary>
-    /// <param name="board">The Sudoku board</param>
+    /// <param name="board">The Sodoku board</param>
     /// <returns>
     /// Returns true if any changes were made, otherwise, false.
     /// </returns>
@@ -36,7 +36,7 @@ namespace Sodoku.Heuristics
         /// Applies the naked singles technique to a group of unsolved cells. 
         /// If an option is unique to one cell, it removes all the other options from the cell.
         /// </summary>
-        /// <param name="board">The Sudoku board.</param>
+        /// <param name="board">The Sodoku board.</param>
         /// <param name="unsolvedCells">A list of unsolved cells in a row, column, or box.</param>
         /// Returns true if any changes were made, otherwise, false.
 

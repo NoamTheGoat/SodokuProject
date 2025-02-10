@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,22 @@ namespace Sodoku
         //Used for counting the number of recurive calls
         public int counter = 0;
 
+        //Used to store how much time it took the 
+        public long sodokuSolverTimer { get; set; }
+
         public SodokuSolver(int[] input)
         {
             board = new Board(input);
         }
+
+        /// <summary>
+        /// integrates all the solving techniques into one method
+        /// </summary>
+        /// <returns>true if the board was solved, otherwise false</returns>
         public bool SolveSodoku()
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             SolveWithHeuristics();
 
             UnsolvedCell firstUnsolvedCell = board.FindCellWithMinOptions();
@@ -39,17 +50,20 @@ namespace Sodoku
                 return false;
             }
 
+            stopwatch.Stop();
+            this.sodokuSolverTimer = stopwatch.ElapsedMilliseconds;
+
+            /*for cases when the input is a full wrong solved board*/
             if (!board.IsBoardSolved())
             {
-                return false;
+                return false;  
             }
-
             return true;
         }
 
 
         /// <summary>
-        ///  Solves the Sudoku board using human-like heuristics, 
+        ///  Solves the Sodoku board using human-like heuristics, 
         ///  such as naked singles, hidden singles, and naked sets.
         ///  if the board is 9x9 or smaller it uses naked sets, 
         ///  and if the boards is bigger it uses naked pairs because it is more efficient for bigger boards
@@ -92,7 +106,7 @@ namespace Sodoku
         }
 
         /// <summary>
-        /// A recursive algorithm that attempts to solve the Sudoku puzzle,
+        /// A recursive algorithm that attempts to solve the Sodoku puzzle,
         /// using backtracking from a given unsolved cell.
         /// </summary>
         /// <param name="currentCell">The current unsolved cell from which to start backtracking.</param>
@@ -150,7 +164,7 @@ namespace Sodoku
         /// <summary>
         /// Converts the board back to string for exporting
         /// </summary>
-        /// <returns>A string representing the Sudoku board, 
+        /// <returns>A string representing the Sodoku board, 
         /// or null if the board is not fully solved.</returns>
         public string ReturnBoardAsString()
         {
@@ -175,6 +189,11 @@ namespace Sodoku
         public bool IsValidSodokuBoard()
         {
             return board.IsValidBoard();
+        }
+
+        public bool IsSodokuBoardSolved()
+        {
+            return board.IsBoardSolved();
         }
     }
 }

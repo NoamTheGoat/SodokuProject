@@ -12,14 +12,14 @@ namespace Sodoku.IO
     public static class SolveBoardWithInput
     {
         /// <summary>
-        /// Solves a Sudoku puzzle from the provided input string. 
+        /// Solves a Sodoku puzzle from the provided input string. 
         /// Optionally writes the solution to a file.
         /// </summary>
-        /// <param name="input">A string representing the Sudoku puzzle in a valid format.</param>
+        /// <param name="input">A string representing the Sodoku puzzle in a valid format.</param>
         /// <param name="filePath">An optional path to a file where the solved board will be saved. 
         /// If not provided, the solution will not be saved to a file.</param>
         /// <exception cref="NotVaildInputException">Thrown when the input is invalid.</exception>
-        /// <exception cref="NotVaildBoardException">Thrown when the Sudoku board is invalid.</exception>
+        /// <exception cref="NotVaildBoardException">Thrown when the Sodoku board is invalid.</exception>
         public static void SolveWithInput(string input, string filePath = "")
         {
             Console.WriteLine();
@@ -37,18 +37,17 @@ namespace Sodoku.IO
                 throw new NotVaildBoardException();
             }
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             bool boardSolved = solver.SolveSodoku();
-            stopwatch.Stop();
 
-            if (boardSolved)
+            if (boardSolved && solver.IsSodokuBoardSolved())
             {
                 Console.WriteLine("The solved board is:\n");
                 solver.PrintSodokuBoard();
                 Console.WriteLine(solver.ReturnBoardAsString() + "\n");
+
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Board solved in: {stopwatch.ElapsedMilliseconds} milliseconds\n");
+                Console.WriteLine($"Board solved in: {solver.sodokuSolverTimer} milliseconds\n");
+
                 Console.ResetColor();
 
                 if (filePath != "")
@@ -70,7 +69,7 @@ namespace Sodoku.IO
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"The board is not solvable, elapsed time: " +
-                    $"{stopwatch.ElapsedMilliseconds} milliseconds");
+                    $"{solver.sodokuSolverTimer} milliseconds");
                 Console.ResetColor();
             }
         }

@@ -15,7 +15,7 @@ namespace Sodoku.Heuristics
         /// These options can be eliminated from other cells in the same group (row, column, or box).
         /// This naked pairs is more efficient than naked sets with a set size of 2 so it is used for bigger boards.
         /// </summary>
-        /// <param name="board">The Sudoku board on which naked pairs are to be detected and processed.</param>
+        /// <param name="board">The Sodoku board on which naked pairs are to be detected and processed.</param>
         /// <returns>
         /// Returns true if any changes were made, otherwise, false.
         /// </returns>

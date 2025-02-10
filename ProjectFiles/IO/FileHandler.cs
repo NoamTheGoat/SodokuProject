@@ -14,8 +14,8 @@ namespace Sodoku.IO
         /// <summary>
         /// Reads the Sodoku board input from a file specified by the user. 
         /// </summary>
-        /// <param name="sodokuBoardInput">The Sudoku board input read from the file.</param>
-        /// <param name="filePath">The path to the file containing the Sudoku board input.</param>
+        /// <param name="sodokuBoardInput">The Sodoku board input read from the file.</param>
+        /// <param name="filePath">The path to the file containing the Sodoku board input.</param>
         /// <returns>
         /// Returns true if the file was successfully read otherwise, false.
         /// </returns>
