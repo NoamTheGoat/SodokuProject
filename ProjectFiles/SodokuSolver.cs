@@ -32,13 +32,14 @@ namespace Sodoku
             if (firstUnsolvedCell == null)
             {
                 firstUnsolvedCell = board.FindFirstUnsolvedCell();
-                if (firstUnsolvedCell == null)
-                {
-                    return true;
-                }
             }
 
             if (!SolveWithBackTracking(firstUnsolvedCell))
+            {
+                return false;
+            }
+
+            if (!board.IsBoardSolved())
             {
                 return false;
             }
@@ -174,11 +175,6 @@ namespace Sodoku
         public bool IsValidSodokuBoard()
         {
             return board.IsValidBoard();
-        }
-
-        public bool IsSodokuBoardSolved()
-        {
-            return board.IsBoardSolved();
         }
     }
 }
