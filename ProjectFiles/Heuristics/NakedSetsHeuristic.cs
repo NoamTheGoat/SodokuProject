@@ -27,9 +27,9 @@ namespace Sodoku.Heuristics
 
             for (int i = 0; i < BoardLength; i++)
             {
-                isChanged |= ProcessGroupForNakedSets(board, board.GetRow(i), setSize);
-                isChanged |= ProcessGroupForNakedSets(board, board.GetCol(i), setSize);
-                isChanged |= ProcessGroupForNakedSets(board, board.GetBox(i + 1), setSize);
+                isChanged |= ProcessGroupForNakedSets(board, board.GetUnsolvedCellsInRow(i), setSize);
+                isChanged |= ProcessGroupForNakedSets(board, board.GetUnsolvedCellsInCol(i), setSize);
+                isChanged |= ProcessGroupForNakedSets(board, board.GetUnsolvedCellsInBox(i + 1), setSize);
             }
 
             return isChanged;

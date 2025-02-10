@@ -49,15 +49,15 @@ namespace Sodoku.Heuristics
 
                         if (groupSet[i]._box == groupSet[j]._box)
                         {
-                            pairChanged = EliminateNakedSets(board, board.GetBox(groupSet[i]._box), nakedPair);
+                            pairChanged = EliminateNakedSets(board, board.GetUnsolvedCellsInBox(groupSet[i]._box), nakedPair);
                         }
                         else if (groupSet[i]._col == groupSet[j]._col)
                         {
-                            pairChanged = EliminateNakedSets(board, board.GetCol(groupSet[i]._col), nakedPair);
+                            pairChanged = EliminateNakedSets(board, board.GetUnsolvedCellsInCol(groupSet[i]._col), nakedPair);
                         }
                         else if (groupSet[i]._row == groupSet[j]._row)
                         {
-                            pairChanged = EliminateNakedSets(board, board.GetRow(groupSet[i]._row), nakedPair);
+                            pairChanged = EliminateNakedSets(board, board.GetUnsolvedCellsInRow(groupSet[i]._row), nakedPair);
                         }
 
                         isChanged |= pairChanged;
