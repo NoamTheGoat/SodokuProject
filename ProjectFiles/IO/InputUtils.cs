@@ -68,12 +68,15 @@ namespace Sodoku.IO
         /// </summary>
         public static void ShowMenu()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(" ─────────────────────────────── \n" +
                               "│Enter c to write in console    │\n" +
                               "│Enter f to read from file      │\n" +
                               "│Enter x to exit                │\n" +
                               "│Enter clr to clear the console │\n" +
                               " ─────────────────────────────── ");
+            Console.ResetColor();
+
         }
 
         /// <summary>

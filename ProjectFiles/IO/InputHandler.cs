@@ -65,7 +65,9 @@ namespace Sodoku.IO
         public static void RunProgram()
         {
             Console.SetIn(new StreamReader(Console.OpenStandardInput(8192)));
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Welcom to my sodoku solver!");
+            Console.ResetColor();
             while (true)
             {
                 try

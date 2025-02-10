@@ -41,27 +41,40 @@ namespace Sodoku.IO
             bool boardSolved = solver.SolveSodoku();
             stopwatch.Stop();
 
-            if (boardSolved && solver.IsSodokuBoardSolved())
+            if (boardSolved)
             {
-                Console.WriteLine("The solved board is:");
+                Console.WriteLine("The solved board is:\n");
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 solver.PrintSodokuBoard();
                 Console.WriteLine(solver.ReturnBoardAsString() + "\n");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Board solved in: {stopwatch.ElapsedMilliseconds} milliseconds\n");
+                Console.ResetColor();
+
                 if (filePath != "")
                 {
 
                     using (StreamWriter sw = new StreamWriter(filePath, append: true))
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("Copying the solution to the original file...\n");
+                        Console.ResetColor();
                         sw.WriteLine("\n\n" + solver.ReturnBoardAsString());
+
                         System.Threading.Thread.Sleep(1000);
                     }
                 }
             }
+
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"The board is not solvable, elapsed time: " +
                     $"{stopwatch.ElapsedMilliseconds} milliseconds");
+                Console.ResetColor();
             }
         }
     }
