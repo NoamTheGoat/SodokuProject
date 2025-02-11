@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Sodoku.IO.InputUtils;
 
 namespace Sodoku.IO
 {
@@ -27,11 +28,14 @@ namespace Sodoku.IO
             {
                 throw new NotVaildInputException();
             }
-            int[] a = InputUtils.InputParser(input);
+            int[] inputAsArray = InputUtils.InputParser(input);
 
-            SodokuSolver solver = new SodokuSolver(a);
+
+            SodokuSolver solver = new SodokuSolver(inputAsArray);
+            Console.ForegroundColor = ConsoleColor.Red;
             solver.PrintSodokuBoard();
-            
+            Console.ResetColor();
+
             if (!solver.IsValidSodokuBoard())
             {
                 throw new NotVaildBoardException();
@@ -39,15 +43,21 @@ namespace Sodoku.IO
 
             bool boardSolved = solver.SolveSodoku();
 
-            if (boardSolved && solver.IsSodokuBoardSolved())
+            if (boardSolved)
             {
+                
                 Console.WriteLine("The solved board is:\n");
+                Console.ForegroundColor = ConsoleColor.Green;
                 solver.PrintSodokuBoard();
+                Console.ResetColor();
+                
+                Console.WriteLine("The solved board as string:\n");
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine(solver.ReturnBoardAsString() + "\n");
+                Console.ResetColor();
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Board solved in: {solver.sodokuSolverTimer} milliseconds\n");
-
                 Console.ResetColor();
 
                 if (filePath != "")
@@ -55,12 +65,10 @@ namespace Sodoku.IO
 
                     using (StreamWriter sw = new StreamWriter(filePath, append: true))
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("Copying the solution to the original file...\n");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        ShowLoadingEffect("Copying the solution to the original file");
                         Console.ResetColor();
                         sw.WriteLine("\n\n" + solver.ReturnBoardAsString());
-
-                        System.Threading.Thread.Sleep(1000);
                     }
                 }
             }

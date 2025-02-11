@@ -32,6 +32,9 @@ namespace Sodoku.IO
 
                 case "clr":
                     Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    CoolFrontScreenText();
+                    Console.ResetColor();
                     break;
 
                 case "f":
@@ -66,7 +69,7 @@ namespace Sodoku.IO
         {
             Console.SetIn(new StreamReader(Console.OpenStandardInput(8192)));
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Welcom to my sodoku solver!");
+            CoolFrontScreenText();
             Console.CancelKeyPress += (sender, e) =>
             {
                 Console.WriteLine("Bye bye. have a nice day");
