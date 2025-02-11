@@ -402,37 +402,48 @@ namespace Sodoku
         /// </summary>
         public void PrintBoard()
         {
-            int boxSize = (int)Math.Sqrt(BoardLength);
+
+            int cellWidth = 2; // Each cell is 2 characters wide
+            int boxWidth = BoxLength * (cellWidth + 1); // Width of each box section
+            int totalWidth = BoardLength * (cellWidth + 1) + (BoxLength - 1); // Full width including borders
+
+            string topBorder = "┌" + string.Join("┬", Enumerable.Repeat(new string('─', boxWidth - (BoxLength-1)), BoxLength)) + "┐";
+            string middleBorder = "├" + string.Join("┼", Enumerable.Repeat(new string('─', boxWidth - (BoxLength - 1)), BoxLength)) + "┤";
+            string bottomBorder = "└" + string.Join("┴", Enumerable.Repeat(new string('─', boxWidth - (BoxLength - 1)), BoxLength)) + "┘";
+
+            Console.WriteLine(topBorder);
 
             for (int row = 0; row < BoardLength; row++)
             {
-                // Print horizontal separators between boxes
-                if (row % boxSize == 0 && row != 0)
-                {
-                    Console.WriteLine(new string('─', BoardLength * 3 + (boxSize - 1) * 2 - 1));
-                }
+                Console.Write("│"); // Left border
 
                 for (int col = 0; col < BoardLength; col++)
                 {
-                    // Print vertical separators between boxes
-                    if (col % boxSize == 0 && col != 0)
-                    {
-                        Console.Write("│ ");
-                    }
-
                     if (_board[row, col] is SolvedCell tempCell)
                     {
-                        Console.Write(((char)(tempCell._value + '0')).ToString().PadLeft(2) + " ");
+                        char displayChar = (char)(tempCell._value + '0'); 
+                        Console.Write($" {displayChar}");
                     }
                     else
                     {
-                        Console.Write(". ".PadLeft(3));
+                        Console.Write(" ."); 
+                    }
+
+                    if ((col + 1) % BoxLength == 0) // Box separator
+                    {
+                        Console.Write(" │");
                     }
                 }
 
-                Console.WriteLine();
+                Console.WriteLine(); // End row
+
+                if ((row + 1) % BoxLength == 0 && row + 1 < BoardLength)
+                {
+                    Console.WriteLine(middleBorder); // Middle separator between boxes
+                }
             }
 
+            Console.WriteLine(bottomBorder); // Bottom border
             Console.WriteLine();
         }
 
@@ -455,7 +466,11 @@ namespace Sodoku
             return true;
         }
 
-        // Helper method to check if a set contains exactly {1, ..., BoardLength}
+        /// <summary>
+        /// Helper method to check if a set contains exactly {1, ..., BoardLength} options
+        /// </summary>
+        /// <param name="solvedCellGroup"></param>
+        /// <returns>Ture if a set contains exactly {1, ..., BoardLength}, otherwise false</returns>
         private bool IsValidSet(List<SolvedCell> solvedCellGroup)
         {
             if(solvedCellGroup.Count != BoardLength)
