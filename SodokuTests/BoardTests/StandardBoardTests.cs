@@ -98,6 +98,19 @@ namespace SodokuTests.BoardTests
         }
 
         [TestMethod]
+        public void UnsovlableBoard3Test()
+        {
+            // ARRANGE
+            string unsolvedBoard = "100006080000700000090050000000560030300000000000003801500001060000020400802005010";
+            UpdateConstants((int)Math.Sqrt(Math.Sqrt(unsolvedBoard.Length)));
+            int[] unsolvedBoardAsArray = InputUtils.InputParser(unsolvedBoard);
+            var solver = new SodokuSolver(unsolvedBoardAsArray);
+
+            // ACT & ASSERT
+            Assert.IsFalse(solver.SolveSodoku());
+        }
+
+        [TestMethod]
         public void EmptyBoard()
         {
             // ARRANGE
