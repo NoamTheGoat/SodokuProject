@@ -18,10 +18,10 @@ namespace Sodoku
     {
         private IBoard board;
 
-        //Used for counting the number of recurive calls
-        public int counter = 0;
+        //Used for counting the number of recurive calls of the backtracking algorithm
+        private int _recursiveCallsCounter = 0;
 
-        //Used to store how much time it took the 
+        //Used to store how much time it took the solver to finsh solving the board(successfully or not)
         public long sodokuSolverTimer { get; set; }
 
         public SodokuSolver(int[] input)
@@ -47,6 +47,8 @@ namespace Sodoku
 
             if (!SolveWithBackTracking(firstUnsolvedCell))
             {
+                stopwatch.Stop();
+                this.sodokuSolverTimer = stopwatch.ElapsedMilliseconds;
                 return false;
             }
 
@@ -56,7 +58,7 @@ namespace Sodoku
             /*for cases when the input is a full wrong solved board*/
             if (!board.IsBoardSolved())
             {
-                return false;  
+                return false;
             }
             return true;
         }
@@ -65,8 +67,9 @@ namespace Sodoku
         /// <summary>
         ///  Solves the Sodoku board using human-like heuristics, 
         ///  such as naked singles, hidden singles, and naked sets.
-        ///  if the board is 9x9 or smaller it uses naked sets, 
-        ///  and if the boards is bigger it uses naked pairs because it is more efficient for bigger boards
+        ///  if the board is 9x9 or smaller it uses naked sets for the first 10 iterations
+        ///  beacuse it is less efficenit and swiches to naked pairs, 
+        ///  and if the boards is bigger it uses naked pairs because it is more efficient
         /// </summary>
         /// <param name="board"></param>
         private void SolveWithHeuristics()
@@ -88,19 +91,25 @@ namespace Sodoku
                     isChanged = true;
                 }
 
-                if (BoardLength <= StandardBoardSize)
+                if (BoardLength > StandardBoardSize)
                 {
                     isChanged |= HandleHiddenSingles(board);
-
-                    for (int i = 2; i < BoardLength; i++)
-                    {
-                        isChanged |= HandleNakedSets(board, i);
-                    }
+                    isChanged |= HandleNakedPairs(board);
                 }
                 else
                 {
                     isChanged |= HandleHiddenSingles(board);
-                    isChanged |= HandleNakedPairs(board);
+                    if (_recursiveCallsCounter < 10)
+                    {
+                        for (int i = 2; i < BoardLength; i++)
+                        {
+                            isChanged |= HandleNakedSets(board, i);
+                        }
+                    }
+                    else
+                    {
+                        isChanged |= HandleNakedPairs(board);
+                    }
                 }
             }
         }
@@ -113,7 +122,7 @@ namespace Sodoku
         /// <returns>True if a solution is found, otherwise, false</returns>
         private bool SolveWithBackTracking(UnsolvedCell currentCell)
         {
-            counter++;
+            _recursiveCallsCounter++;
             if (board.FindFirstUnsolvedCell() == null)
             {
                 return true;
