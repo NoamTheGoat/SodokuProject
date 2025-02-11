@@ -3,7 +3,9 @@ using Sodoku.ProjectFiles.CustomExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static Sodoku.GlobalConstants;
 
@@ -89,5 +91,27 @@ namespace Sodoku.IO
             Console.WriteLine(message);
             Console.ResetColor();
         }
+
+        public static void ShowLoadingEffect(string message)
+        {
+            Console.Write(message);
+            for (int i = 0; i < 3; i++)
+            {
+                System.Threading.Thread.Sleep(750);
+                Console.Write(".");
+            }
+            Console.WriteLine();
+        }
+
+        public static void CoolFrontScreenText()
+        {
+            Console.WriteLine(  "    _   __                     _          _____           __      __            _____       __               \r\n" +
+                                "   / | / /___  ____ _____ ___ ( )_____   / ___/____  ____/ /___  / /____  __   / ___/____  / /   _____  _____\r\n" +
+                                "  /  |/ / __ \\/ __ `/ __ `__ \\|// ___/   \\__ \\/ __ \\/ __  / __ \\/ //_/ / / /   \\__ \\/ __ \\/ / | / / _ \\/ ___/\r\n" +
+                                " / /|  / /_/ / /_/ / / / / / / (__  )   ___/ / /_/ / /_/ / /_/ / ,< / /_/ /   ___/ / /_/ / /| |/ /  __/ /    \r\n" +
+                                "/_/ |_/\\____/\\__,_/_/ /_/ /_/ /____/   /____/\\____/\\__,_/\\____/_/|_|\\__,_/   /____/\\____/_/ |___/\\___/_/");
+
+        }
+
     }
 }
