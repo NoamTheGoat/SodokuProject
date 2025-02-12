@@ -28,22 +28,25 @@ The Board class holds the grid of ICell objects, which can be either UnsolvedCel
 
 Heuristics are problem-solving strategies that use practical methods or rules of thumb to find a solution more efficiently, often by focusing on the most promising options.<br />
 I used these:
-* Naked single - A naked single occurs when a cell has only one possible value left, making it the  "single" valid option for that cell.<br />
+* **Naked single** - A naked single occurs when a cell has only one possible value left, making it the  "single" valid option for that cell.<br />
 <p align="center">
     <img src="https://hodoku.sourceforge.net/examples/fh02.png" width="45%">
     <img src="https://hodoku.sourceforge.net/examples/fh01.png" width="45%">
 </p>
-* Hidden single - A hidden single occurs when a number can only be placed in one unsolved cell within a row, column, or box, even if other numbers are possible options for that cell<br />
+
+* **Hidden single** - A hidden single occurs when a number can only be placed in one unsolved cell within a row, column, or box, even if other numbers are possible options for that cell<br />
 <p align="center">
     <img src="https://sudoku.com/img/post-images/1646984732-8.%20Hidden%20singles_1.png" width="45%">
     <img src="https://sudoku.com/img/post-images/1646984732-8.%20Hidden%20singles_2.png" width="45%">
 </p>
-* Naked pairs - A naked pair occurs when two unsolved cells in a row, column, or box have the same two possible values and no other possibility, and no cell in that group can contain those values. These two values can then be removed as options from other cells in the same row, column, or box.<br /><br />
+
+* **Naked pairs** - A naked pair occurs when two unsolved cells in a row, column, or box have the same two possible values and no other possibility, and no cell in that group can contain those values. These two values can then be removed as options from other cells in the same row, column, or box.<br /><br />
 <p align="center">
     <img src="https://hodoku.sourceforge.net/examples/l202.png" width="45%">
 </p>
-* Naked sets - A naked set occurs when a set of n unsolved cells in a unit (row, column, or box) have exactly n unique options between them. If the union of their options matches the number of cells (n), it means those n cells must take those n values, and these values can be removed as options from other cells in the same unit. naked sets generalize naked pairs.<br />
-* Least options first - This heuristic finds the unsolved cell with the fewest possible values (options). It helps prioritize cells that are most constrained, aiding the solver in making decisions that narrow down possibilities.
+
+* **Naked sets** - A naked set occurs when a set of n unsolved cells in a unit (row, column, or box) have exactly n unique options between them. If the union of their options matches the number of cells (n), it means those n cells must take those n values, and these values can be removed as options from other cells in the same unit. naked sets generalize naked pairs.<br />
+* **Least options first** - This heuristic finds the unsolved cell with the fewest possible values (options). It helps prioritize cells that are most constrained, aiding the solver in making decisions that narrow down possibilities.
 
 
 ## Executing program
