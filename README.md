@@ -29,6 +29,10 @@ The Board class holds the grid of ICell objects, which can be either UnsolvedCel
 Heuristics are problem-solving strategies that use practical methods or rules of thumb to find a solution more efficiently, often by focusing on the most promising options.<br />
 I used these:
 * Naked single - A naked single occurs when a cell has only one possible value left, making it the  "single" valid option for that cell.<br />
+<p align="center">
+    <img src="https://hodoku.sourceforge.net/examples/fh02.png" width="45%">
+    <img src="https://hodoku.sourceforge.net/examples/fh01.png" width="45%">
+</p>
 * Hidden single - A hidden single occurs when a number can only be placed in one unsolved cell within a row, column, or box, even if other numbers are possible options for that cell<br />
 <p align="center">
     <img src="https://sudoku.com/img/post-images/1646984732-8.%20Hidden%20singles_1.png" width="45%">
